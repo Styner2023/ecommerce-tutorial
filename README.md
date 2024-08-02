@@ -1,6 +1,16 @@
 # Mood Shop Tutorial
 
-A tutorial that teaches the fundamentals of **HTML**, **CSS** and **JS**
+A tutorial that teaches the fundamentals of **HTML**, **CSS** and **JS**. By completing this tutorial you will learn how to write HTML to create structured webpage, use CSS to style the contents of a page, and use JavaScript to implement business logic. 
+
+The end product of the tutorial will be a mock up of an ecommerce web page. While it won't actually be a sales platform, it will:
+
+- Load data from JSON
+- Display the JSON data as HTML
+- Use JS to create shopping cart functionality
+  - You will be able to add items to a cart
+  - display the items in the cart
+  - add, remove, and update the items in the cart
+  - calculate and display the total cost of items in the cart. 
 
 ![Mood Gif](P01-Getting-Started/assets/01_getting-started_mood.gif "mood gif")
 
