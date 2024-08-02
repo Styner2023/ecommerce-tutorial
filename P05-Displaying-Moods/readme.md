@@ -1,5 +1,4 @@
 # Displaying Moods
-
 This chapter will focus on displaying all moods on our page. Currently our page has only a navbar.
 
 At the end of this chapter, we will be able to have something like this.
@@ -28,6 +27,14 @@ Now navigate to your resources folder.
 >
 > Move the `data.js` into your project folder.  
 
+# What exactly is a JSON data? 🤔
+JSON, AKA JavaScript Object Notation
+
+A JSON object contains data in the form of key/value pairs:
+
+- The key and value pairs are separated by a colon(:)
+- Located left of the colon is the key, and on the right is it's value.
+
 If you open your `data.js` file, you will see an array of JSON data.
 
 ```js
@@ -47,14 +54,19 @@ const data = [{
 ...
 ```
 
-# What exactly is a JSON data? 🤔
+Each product is represented as an object. An object is arranged in property value pairs. The first object in the list is: 
 
-AKA JavaScript Object Notation
+```JS
+{
+  "id": 1,
+  "name": "happy",
+  "image": "./resources/images/happy_spongebob.gif",
+  "desc": "Happiness lies in the joy of achievement and the thrill of creative effort.",
+  "price": 5.99
+}
+```
 
-A JSON object contains data in the form of key/value pairs:
-
-- The key and value pairs are separated by a colon(:)
-- Located left of the colon is the key, and on the right is it's value.
+The properties are: id, name, image, desc, and price. The name is separated from the value by a colon ":". Each property is is followed by a comma. 
 
 > [info]
 >
@@ -78,7 +90,7 @@ Now that we have a good understanding of JSON, we can better understand what the
 </div>
 ```
 
-We will be using javascript to dynamically display all the items for the mood shop. We will use a **for loop** to loop through each object inside the `data.js` array and assign image as the image source tag, description as the paragraph to describe the image and price to show the price for each mood.
+We will be using javascript to dynamically display all the items for the mood shop. We will use a **for loop** to loop through each object inside the `data.js` array and assign image to the `src` attribute of the img tag, description, and price to show each mood "product".
 
 >[action]
 > Create a new file called `scripts.js`. This file will hold all your javascript logic to display the items, and future steps like adding them to the cart and removing them from the cart.
@@ -87,14 +99,19 @@ We will be using javascript to dynamically display all the items for the mood sh
 Link your `scripts.js` to your `index.html` by adding a `<script>` to the bottom of `index.html`. Make it look like the code snippet below:
 > 
 ```html
+<html>
 	...
-	<script src="scripts.js" type="module"></script>
+	<body>
+	...
+		<script src="scripts.js" type="module"></script>
 	</body>
 </html>
 ```
 >
 
-You're declaring this script as a "module" to allow you to use `import` which will come in the following step!
+You're declaring this script as a "module" to allow you to use `import` which will come in the following step! 
+
+Later when you study JavaScript in more detail you will learn more about modules. For now what you need to know, is that we need to decalre this script as a module to use the import statement, which makes it convenient to load the JSON file. 
 
 > [action]
 > Open `index.html` add the following at the bottom of the 
@@ -107,9 +124,19 @@ You're declaring this script as a "module" to allow you to use `import` which wi
 >
 > ```import data from './data.js'```
 
-This imports the information from `data.js`. That file constains an array of objects that are the items for sale in the shop. 
+**Important!** You will need to use a server to view the page from this point on. Without a server you will see an error similar to: 
 
-All of these items will be displayed in `div#items`. We can get this element using its id name. In order to do this, we can use the `document.querySelector()` function by passing the id of the element. 
+> **Failed to load resource:** Origin null is not allowed by Access-Control-Allow-Origin. Status code: 0
+
+This a CORS (Cross Origin Resource Charing) error. In a nutshell, CORS prevents webpages from accessing local files. This is a security feature. 
+
+To solve this problem, install Live Server in VSCode. Follow the instructions here: https://www.youtube.com/watch?v=_Tl-6HeV0Rc
+
+**From here on, I will assume you are testing your work with Live Server!**
+
+The next step is to load the JSON as `data` and display all of the items in the array in `div#items`. 
+
+You can get this element using its id name. In order to do this, use the `document.querySelector()` function and pass the id of the element. 
 
 >[action]
 >
@@ -157,8 +184,19 @@ for (let i = 0; i < data.length; i += 1) {
 Let's break down the above code:
 
 ## Breaking Down The JavaScript
+We started with a loop. This a programming structure that looks like this: 
 
-Here we are looping through each object and for each of them, we create a `div` element:
+```JS
+for (let i = 0; i < data.length; i += 1) {
+
+}
+```
+
+This loop uses the variable `i` to count, it continues counting while `i` is less then the length of data, and adds one to `i` after each loop. 
+
+read more about loops here: https://javascript.info/while-for#the-for-loop
+
+While we are looping through each object in data, we create a `div` element:
 
 ```js
 const newDiv = document.createElement('div');
@@ -167,7 +205,7 @@ const newDiv = document.createElement('div');
 This will create an HTML div element. Just as if you had written this but you in this case you did it with code!
 
 ```html
-<div> </div>
+<div></div>
 ```
 
 The second line assigns a class name to the div you just created!
@@ -182,8 +220,7 @@ Just as if you had written:
 <div class='item'> </div>
 ```
 
-We want this div we created to hold the image, description and price of each item.
-Let's start with the image.
+We want this div we created to hold the image, description and price of each item. Let's start with the image.
 We can create the image tag using `document.createElement('img')`. This creats an `<img>` tag/element. We'll store it in a variable so we can use it. 
 
 ```js
@@ -198,10 +235,11 @@ img.width = 300
 img.height = 300
 ```
 
-**Important!** Creating the elements doesn't add them to the DOM! After you create an element if you want to make it visible you will have to add it to the DOM tree! 
+**Important!** Creating an element doesn't add that element to the DOM! After you create an element if you want to make it visible you will have to add it to the DOM tree with `appendChild()`!
+
+In the code above you added `newDiv` to the DOM as a child of `itemsContainer` with: `itemsContainer.appendChild(newDiv)`.
 
 ## Connecting `scripts.js` with `index.html`
-
 Just like we connected our `css` file with our `index.html`, we also need to connect our `scripts.js` file with `index.html`.
 
 > [action]
@@ -230,9 +268,9 @@ Now that you have created the image, you can append it to the `div` element you 
 </div>
 ```
 
-You want to create one div with an img for item in the data. You will add other things to each of these divs in a future step. 
+You want to create one div with an img for each element in the data. You will add other things to each of these divs in a future step. 
 
-To create the above code, you used `appendChild()` to append the image element into a div element.
+You used `appendChild()` to append the img element to the div element.
 Here's what the javascript code looks like:
 
 ```js
@@ -316,7 +354,6 @@ If you open your browser, you should now be able to see something like this. �
 [ES6 for each loop](https://gomakethings.com/looping-through-arrays-the-es6-way/)
 
 # Add to Cart
-
 The next thing to do would be adding an `Add To Cart` button for each of the moods.
 
 We will be adding a button element using javascript. This will be in the same for loop we used to create the image, description and prices.
@@ -334,20 +371,24 @@ We should also make the `id` of each button unique.
 
 > [action]
 >
-> To do this we will assign the `id` to the name of the mood.
+> To do this we will assign each mood a data-id aattribute matching the name of the mood.
 >
 ```js
-// add an  id name to the button
-button.id = data[i].name
+// add a data-id name to the button
+button.dataset.id = data[i].name
 ```
 
-There needs to be a way to access the price of each Mood when their "Add to Cart" button is clicked. 🤔
+**Data attribute** are developer defined attributes. Use these when you, the developer, need to store some information with a DOM element. We need to know which product should be added to the cart when you click one of the many add to cart buttons. 
 
-We will use a ***custom data attribute*** to store the price for each mood on the button. 💡
+A data attribute is always formatted as `data-name` where 'name' could be any string. In this case `button.dataset.id` will make the attribute `data-id`. 
 
 > [info]
 >
 > Read up on [data- attributes](https://www.w3schools.com/tags/att_data-.asp) and [custom data attributes](http://html5doctor.com/html5-custom-data-attributes/)
+
+There needs to be a way to access the price of each Mood when their "Add to Cart" button is clicked. 🤔
+
+We will use a ***custom data attribute*** to store the price for each mood on the button. 💡
 
 Here's an example of the code we would use to achieve this:
 
@@ -391,7 +432,7 @@ for (let i = 0; i < data.length; i += 1) {
 	// Make a button 
 	const button = document.createElement('button')
 	// add an  id name to the button
-	button.id = data[i].name
+	button.dataset.id = data[i].name
 	// creates a custom attribute called data-price. That will hold price for each element in the button
 	button.dataset.price = data[i].price
 	button.innerHTML = "Add to Cart"
@@ -402,7 +443,6 @@ for (let i = 0; i < data.length; i += 1) {
 Your page should now show each mood, with description, price and button.
 
 ![Display with button](assets/05_displaying-moods_display-with-button.png "display with button")
-
 
 **Congrats! You have just learned how to display items dynamically using javascript.** 🎉🎊
 

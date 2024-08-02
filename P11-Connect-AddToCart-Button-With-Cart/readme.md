@@ -1,112 +1,314 @@
-# Connect Add to Cart button with Shopping Cart
+# Display the total cost of the cart
+It would be good to show the total cost of the cart. You'd find that helpful? 
 
-Now that we can show the shopping cart in the footer of our page, the next
-step would be to connect our 'Add to Cart' buttons on the items to the cart.
-This way, when a user clicks on 'Add to Cart', the item will be displayed inside
-the cart!
+To do this you need to loop over all of the items in the cart and sum the total of each items price times it's qty. 
 
-# Using querySelectorAll function
+You need to do this each time the cart is updated and displayed, so you should make a function...
 
-The first thing we need to do is get all the buttons from the page. Currently all the buttons on our page are the 'Add to Cart' buttons.
+Write a function that will get teh total of all items in the cart. What would you name this? Think about it, the name is very important, since it will remind you and your team what this function does. 
 
-To select all buttons, we will use the ```document.querySelectorAll``` function.
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
 
-This function gives you all the elements in the document that matches the query.
+I used the name `getCartTotal`. 
 
-**For example**: if we pass ```document.querySelectorAll('button')```, we will get a node list of all the buttons in our document/page.
-
-> [info]
->
-> To learn more about ```document.querySelectorAll``` :
-[querySelectorAll info](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)
-
-<!--  -->
-
-> [action]
->
-> Use `querySelectorAll` to select all buttons and assign it to a variable named `all_items_button`
->
-> Navigate to your `scripts.js` file. Add this code below the for loop you wrote to display items in the page
->
-```js
-const all_items_button = document.querySelectorAll("button")
+```JS
+const getCartTotal = () => {
+  
+}
 ```
 
-If we print `all_items_button` to our console, we'll see that this gives us a node list of all the buttons in the document.
+Now you need to loop over all items in the cart...
 
-![Node list of buttons](assets/01_connect-addtocart_nodeList-buttons.png "Node list of buttons")
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
 
-We need to convert this into an array. This will make it easier to loop through each button and assign it the `addItem` function.
+This is what I wrote. It's the same as the code we've written before! 
 
-> [info]
-> Check out more on [Array.from info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from)
-
-<!--  -->
-
-> [action]
-> Modify the variable `all_items_button` using `Array.from` to convert the node lists into an array:
->
-```js
-const all_items_button = Array.from(document.querySelectorAll("button"))
+```JS
+const getCartTotal = () => {
+  
+  for (let i = 0; i < cart.length; i += 1) {
+    
+  }
+  
+}
 ```
 
-If you check your console again, you should see array instead of lists.
+To sum all of the items you need to define a variable to hold the total amount. This need to be defined before the loop, and not inside the loop. 
 
-![Array list of buttons](assets/02_connect-addtocart_arrayList-buttons.png "Array list of buttons")
-
-Now that we have access to all the buttons, we can connect it to the `addItem()` and `showItems()` function when the button is clicked.
-
-We'll use another `for` loop to
-
- 1. loop through the buttons
- 1. check if it's clicked or not
- 1. if clicked, add the item to the cart.
-
-# Adding event listener
-
-> [info]
->
-> More info on how to add an [Event listener](https://www.w3schools.com/jsref/met_element_addeventlistener.asp)
-
-We'll add an event listener for each button, to listen to a click event.
-
-The event listener takes 2 parameters:
-
-1. an event
-1. a callback function
-
-Here our event is a click event, and our callback function will be to add the clicked item to the shopping cart.
-
-We'll use `addItem()` and once the item gets added, call `showItems()` function to rerun the `showItems()` to include the added item in the footer.
-
-The `addItem` function takes 2 arguments, which are **name** and **price**.
-
-We'll get the name of the item from the **button id** and the price from the custom attribute **data-price**.
-
-We'll use `getAttribute` function to get the attributes `id` and `data-price`.
-
-> [info]
->
-> More info on [getAttribute](https://www.w3schools.com/jsref/met_element_getattribute.asp)
-
-<!--  -->
-
-> [action]
->
-> Inside your `scripts.js` file, add this `forEach` loop below your `all_items_button` variable
->
-```js
-all_items_button.forEach(elt => elt.addEventListener('click', () => {
-  addItem(elt.getAttribute('id'), elt.getAttribute('data-price'))
-  showItems()
-}))
+```JS
+const getCartTotal = () => {
+  let total = 0 // Define a variable to hold the total 
+  for (let i = 0; i < cart.length; i += 1) {
+    
+  }
+  
+}
 ```
 
-Now refresh your browser and try adding some items to your shopping cart by clicking on any of the 'Add to Cart' buttons.
+If the variable were defined inside the loop it be defined new with each iteration, and we'd lose the previous value. 
 
-![Button connected with cart](assets/03_connect-addtocart_cart-connected.png "button connected with cart")
+Next get the cart item and multiply it's qty by it's price. 
 
-Woo hoo!! 🎉🎊 Our cart is finally connected with the "Add to Cart" button!!
+```JS
+const getCartTotal = () => {
+  let total = 0
+  for (let i = 0; i < cart.length; i += 1) {
+    // get the cart item
+    const item = cart[i]
+    // calculate the total price for that item 
+    // and add it to the total
+    total += item.qty * item.price
+  }
+  
+}
+```
+
+An import feature of functions is that they can return values. The `return` statement ends a function, you can also follow with a value that the function can return to where it was called. 
+
+You used this earlier with `parseInt()`. The `parseInt(str)` function takes a string and returns a number. You used it like this: 
+
+```JS
+const aNumber = parseInt("123")
+```
+
+Here you are "calling" `parseInt("123")`, and passing the argument "123" (a string), and `parseInt()` is returning a number, which is assigned to the variable `aNumber`. 
+
+You can do this with `getCartTotal`, like this: 
+
+```JS
+const getCartTotal = () => {
+  let total = 0
+  for (let i = 0; i < cart.length; i += 1) {
+    const item = cart[i]
+    total += item.qty * item.price
+  }
+  return total // return total
+}
+```
+
+Now you can call `getCartTotal()` and it will return the total, you might use it like this: 
+
+```JS
+const theTotal = getCartTotal()
+console.log(theTotal)
+```
+
+## Displaying the cart total
+The next step is to display the total amount in the cart. To do this you'll need to:
+
+- get the total amount in the cart
+- add an element to the end of the HTML string that is assembled in `displayCart()`. The element can be anything like a `<p>` or `<div>`. 
+
+Try it on your own...
+
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+
+Here is what I came up with. I edited the `displayCart()` function.
+
+```JS
+const displayCart = () => {
+  console.log(cart)
+  let cartStr = ''
+  for (let i = 0; i < cart.length; i += 1) {
+    const item = cart[i]
+    cartStr += `<li>
+      <span>${item.id}</span>
+      <input type="number" value="${item.qty}" class="input-qty" data-id="${item.id}">
+      <span>${item.price}</span>
+      <span>${(item.price * item.qty).toFixed(2)}</span>
+      <button class="button-add" data-id="${item.id}">+</button>
+      <button class="button-sub" data-id="${item.id}">-</button>
+    </li>`
+  }
+
+  // Get the total cost in the cart
+  const cartTotal = getCartTotal()
+  // append a li tag at the end of the cartStr with the total
+  cartStr += `<li>Total: ${cartTotal}</li>`
+
+  const cartItems = document.querySelector('#cart-items')
+  cartItems.innerHTML = cartStr
+}
+```
+
+NOTE! You should place the `getCartTotal()` function above the `displayCart()` function since it should be defined before it is used. 
+
+I used an `<li>` tag here because all of these tags end up inside the `<ul>` and a `<ul>` should only contain `<li>` tags! The `<li>` tags can contain anything. 
+
+## Weird numbers...
+You may have noticed some weird numbers like: `29.950000000000003` showing some times. 
+
+Try adding 5 of an item to the cart. 
+
+When you add 9 items you get: `53.910000000000004`. 
+
+This is normal! In short this is a by product of converting numbers from base 2 to base 10. 
+
+You are used to thinking in base 10, so 10 / 3 = 3.333333333333333 makes sense. The results above are similar but happen when the computer converts numbers from base 2 to base 10. 
+
+How do we fix these? 
+
+JavaScript has us covered with the `.toFixed()` method. This method converts any number into a string with a fixed number of decimal places. Here is an example:
+
+```JS
+const answer = 10 / 3
+console.log(answer) // 3.3333333333333335
+console.log(answer.toFixed(2)) // "3.33"
+```
+
+You need to apply toFixed at any place your code is displaying a decimal number. Here is a list of locations that I identified: 
+
+- `displayCart()` where the total price is displayed. 
+- `getCartTotal()` after the total is calculated. 
+
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+
+In `displayCart()`:
+
+```JS
+...
+cartStr += `<li>
+    ...
+    <span>${(item.price * item.qty).toFixed(2)}</span>
+    ...
+  </li>`
+...
+```
+
+In `getCartTotal()`:
+
+```JS
+const getCartTotal = () => {
+  let total = 0
+  for (let i = 0; i < cart.length; i += 1) {
+    const item = cart[i]
+    total += item.qty * item.price
+  }
+  // Use toFixed(2) to convert to string with 2 decimals
+  return total.toFixed(2)
+}
+```
+
+## Conclusion
+In this section you defined a new function and used return to return a value. This allowed you to reuse code that calculates a value that can be displayed on the page. 
+
+You also solved problems with displaying numbers in software using the `parseInt()` to convert strings to numbers, and `.toFixed()` to convert numbers to strings with a fixed number of decimals. 
 
 # Update progress on Github
 > [action]

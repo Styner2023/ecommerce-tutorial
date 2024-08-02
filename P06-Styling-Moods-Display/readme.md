@@ -1,5 +1,4 @@
 # Styling Moods Display
-
 This chapter will focus on styling our page using CSS grid system. Currently our page has items displaying but they have not been styled yet.
 
 At the end of this chapter, we will be able to have something like this.
@@ -8,7 +7,7 @@ At the end of this chapter, we will be able to have something like this.
 
 Our goal is display 4 items on each row and make a card style for each card.
 
-We will use CSS grid properties to position each item in the page.
+We will use CSS grid to arrange all of the children of the `<div id="items">`.
 
 > [info]
 >
@@ -17,9 +16,9 @@ We will use CSS grid properties to position each item in the page.
 > - [W3 CSS grid](https://www.w3schools.com/css/css_grid.asp),
 > - [CSS grid guide](https://css-tricks.com/snippets/css/complete-guide-grid/)
 
-Inside our `index.html`, The `<main>` tag holds all the `div`s displayed in the page. So we should add the grid style on the `<main>` tag so its children could be aligned in a grid manner.
+Inside your `index.html`, the `<main>` tag holds all the `div`s displayed in the page. So you should add the style `display:grid` to `<main>`, so its children will be arranged in a grid!
 
-We will use its class name to access main.
+Use its class name to access main.
 
 >[action]
 >
@@ -29,16 +28,15 @@ We will use its class name to access main.
 .items {
   width: 80%;
   margin: auto;
-
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1em;
+  grid-gap: 1rem;
 }
 ```
 
-These styles says that main.items should be 80% the width of it's parent (`width: 80%`) and centered since the margin on the left and right will be equal (`margin: auto`). It should arrange it's children in a grid (`display: grid`) and grid will have 4 equal sized columns (`grid-template-columns: repeat(4, 1fr)`) with a gap of 1em between columns and rows (`grid-gap: 1em`). 
+These styles say, `main.items` should be 80% the width of it's parent (`width: 80%`) and centered since the margin on the left and right will be equal (`margin: auto`). It should arrange it's children in a grid (`display: grid`) and grid will have 4 equal sized columns (`grid-template-columns: repeat(4, 1fr)`) with a gap of `1rem` between columns and rows (`grid-gap: 1rem`). 
 
-Earlier in Chapter 4, when we were making each `div` using the `for` loop, we gave it a class name of `item`. We can use this class name to style the `div`.
+Earlier in Chapter 4, when you were making each `div` using the `for` loop, you gave it a class name of `item`. You can use this class name to style all of the `div` inside `main.items`.
 
 Add another style to target each image in the items and size them to fit their grid cell.
 
@@ -49,7 +47,7 @@ Add another style to target each image in the items and size them to fit their g
 }
 ```
 
-This rule targets img tags inside of elements with the class name: item. it syas their width chould 100% (`width: 100%`) that makes the images match the width of .item, and height should stay proportional to the width (`height: auto`). 
+This rule targets img tags inside of elements with the class name: item. it says their width will be 100% (`width: 100%`) that makes the images match the width of .item, and height should stay proportional to the width (`height: auto`). 
 
 Your page should now look something like this:
 
@@ -92,11 +90,110 @@ Target the first or the second paragraph in a card. The first p is the descripti
 .item p:nth-child(2) { ... }
 ```
 
-Style the add to cart button: 
+The `:nth-child(n)` selector, selects an element by its index. 
+
+```HTML
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+```
+
+Imagine the markup above. You could select the second `<li>` tag with `li:nth-child(2)`. This selects all li tags, then gets the second one in the list. 
+
+While `:nth-child(n)` has a lot of utility, its not the most efficient selector! Its good for some situations, but better would be to use a class name! 
+
+Class names are applied with the class attribute: 
+
+```HTML
+<ul>
+  <li></li>
+  <li class="second-item"></li>
+  <li></li>
+</ul>
+```
+
+You could style the "second-item" via its class name like this: 
+
+```CSS
+.second-item { ... }
+```
+
+The beauty of class names is that they are flexible. You can apply them to anything, and things can chare the same class when they need to share the same styles. 
+
+Like this: 
+
+```HTML
+<ul>
+  <li></li>
+  <li class="second-item"></li>
+  <li></li>
+</ul>
+<p class="second-item"></p>
+```
+
+Not only that, elements can have more than one class name. Just separate each class name with a space! 
+
+```HTML
+<ul>
+  <li></li>
+  <li class="second-item list-item"></li>
+  <li></li>
+</ul>
+<p></p>
+<p class="second-item warning callout"></p>
+```
+
+Here the second `<li>` tag has the class names `second-item` and `list-item`. The last `<p>` has the class names `second-item `, `warning`, and `callout`. 
+
+To style the button you could use the descendant selector like this: 
+
+Style the add to cart button (notice the space!): 
 
 ```CSS
 .item button { ... }
 ```
+
+Or assign the button a class name, and style the class name. To add a class name to an existing HTML element you would do this: 
+
+```HTML
+<button class="add-to-cart"></button>
+```
+
+In this case the buttons are being generated by JavaScript. To add a class with JS do this: 
+
+```JS
+// Create the button
+const button = document.createElement('button')
+// add a class name to the button
+button.className = 'add-to-cart'
+...
+```
+
+This applies to all of the other elements you created.
+
+**Challenge:** Choose a stratgey, class name or other selector type. Use this to style the elements in each item. Your items should look something like this in the DOM: 
+
+```HTML
+<div class="item">
+  <img src="images/happy_spongebob.gif" width="300" height="300">
+  <h2>happy</h2>
+  <p>Happiness lies in the joy of achievement and the thrill of creative effort.</p>
+  <p>5.99</p>
+  <button id="happy" data-price="5.99">Add to Cart</button>
+</div>
+```
+
+Either assign class names to elements or style them using other selectors. 
+
+**Challenge:** Style these elements. You should have the following elements that need some styles:
+
+- img
+- title - h2 in the example above
+- description - first p tag above (nth-child(3) because its third in the list)
+- price - second p tag (nth-child(4) because its fourth in the list)
+- button - the add to cart button
 
 ## Stretch Challenge:
 

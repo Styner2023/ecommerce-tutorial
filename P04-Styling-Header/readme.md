@@ -1,10 +1,5 @@
 # Styling Header
-
-
-## Styling the header
-Currently, our header and navbar don't really look like a header or navbar at the moment. We need to add some styles to it.
-
-This folder will hold your css, javascript and image files.
+Currently, the header and navbar don't really look like a header or navbar. You need to add some styles.
 
 > Create a file named `styles.css`. This is where all your element styles would go to.
 >
@@ -26,12 +21,13 @@ To learn more about selectors, visit [CSS selectors](https://www.w3schools.com/c
 The body is the first thing we want to style.
 We're going to start by styling the **font family** and **font size**.
 
-**Line height** - to increase spacing between lines (1.5 - 1.6) is recommended
+**Font family** - there are different font families. Here we will be using: Helvetica.
 
-**Font family** - there are different font families. Here we will be using
- Helvetica font.
+**Font size** - 16px.
 
-**Font size** - 16 px.
+**Line height** - to increase spacing between lines (1.5 - 1.6) is recommended. 
+
+Line height sets the vertical space between lines. The value is multiplied by the font size. If the font size were 16px, a line-height of 1.5 would set the space between lines to 24px. 
 
 >[action]
 >
@@ -57,8 +53,6 @@ Can you guess why?
 > That's because we haven't linked our stylesheet in our HTML file.
 We need to use a ```<link>``` tag inside the ```<head>``` element to link our css file.
 
-<!--  -->
-
 >[action] Navigate to `index.html`. Inside the ```<head>``` element of your `index.html`, add the ```<link>``` element.
 >
 ```html
@@ -69,18 +63,21 @@ We need to use a ```<link>``` tag inside the ```<head>``` element to link our cs
 
 Sweet! We see some font change!
 
+the `rel` attribute tells the browser what type of file you are linking to, in this case a "stylesheet", and the `href` attribute tells the browser where to find that file. 
+
 We want our website name to be on the left side and the navigation links (Home, about, cart) to be on the other side. For this, we will use **flexbox layout**.
 
 # What is flexbox?
-
 Flexbox helps to position elements inside a container.
 We set flex properties on the parent element (container) to make elements inside the container move.
+
+Flex box arranges all of the child elements along an axis which can horizontal or vertical.
 
 > [info]
 >
 > To learn more about flexbox: [Flexbox](https://www.w3schools.com/css/css3_flexbox.asp)
 
-The flex container becomes flexible by setting the **display** property to flex.
+The flex container is activated by setting the **display** property to flex: `display: flex;`.
 
 ```<Header>``` is our container so we will be setting the display property of header to flex. In order to refer to our header inside the css file we will be using it's class name.
 
@@ -109,8 +106,6 @@ The navbar itself is not in rows, because the lists are inside the ```<ul>``` co
 
 >[info] To select the ```<ul>``` tag, we can use **.page-header ul**
 This will select ```<ul>``` elements inside the page-header class.
-
-<!--  -->
 
 >[action] Inside your `styles.css` file, add this code to style the navbar lists.
 >
@@ -154,15 +149,63 @@ To remove the bullet points in each list, we can set the property list-style to 
 
 Congrats! You have just made a decent looking navbar using CSS.
 
+## CSS Rules and Selectors
+Examine the CSS you just wrote. The CSS language is written in "rules". Every rule begins with a selector, followed by a block that contains properties and value pairs. 
+
+For example: 
+
+```CSS
+body {
+  font-family: Helvetica;
+}
+```
+
+This "rule" defines `body` as the selector, the block defines the property of `font-family` with a value of `Helvetica`. 
+
+Selectors identify elements where the properties and values should be applied. In this case the selector is a type, meaning a tag name, in this case the rule applies to `body` tags. 
+
+```CSS
+.page-header ul {
+  list-style: none;
+}
+```
+
+The selector for this rule is `.page-header ul`. The first part begins with a dot `.` which means that this is a class name! By itself, `.page-header` would apply the rule to any tag with the class name "page-header".
+
+The space between `.page-header` and `ul` says that `ul` is a descendant of `.page-header`. 
+
+Taken as a whole, the selector: `.page-header ul` applies the rule to any `ul` tags that are descendants of an element with the class name "page-header".
+
+Looking at the markup below, you can see that the `<ul>` tag appears within the `<div class="page-header">` tag, so the rule above applies to this ul!
+
+```HTML
+<div class="page-header">
+  <ul></ul>
+</div>
+<ul></ul>
+```
+
+The `<div>` tag has the class name `page-header`, so the rule above applies. The first `<ul>` appears within that tag so the selector `.page-header ul` applies to it. The second ul is not a descendant of an element with the class name `page-header` so the rule does not apply to the second ul! 
+
+Notice how selectors can be very selective! You can use them to your advantage! 
+
+Imagine the HTML below. 
+
+```HTML
+<div class="page-header">
+  <ul></ul><!-- ul 1 -->
+  <div>
+    <ul></ul><!-- ul 2 -->
+  </div>
+</div>
+<ul></ul><!-- ul 3 -->
+```
+
+In this example the selector `.page-header ul` applies to both ul 1 and 2. Since they are both within (descendants of) `.page-header`. But not to ul 3 because it is not inside of an element with the class name "page-header".
+
 # Update progress on Github
 
 Now is a good time to update your progress on Github.
-
-```bash
-git add .
-git commit -m 'styled the header and navbar'
-git push
-```
 
 # Stretch Challenge
 
@@ -170,3 +213,9 @@ git push
 >
 > - Change the background color of the navbar
 > - Customize the navbar by changing the font size and font family to your desired choice.
+
+```bash
+git add .
+git commit -m 'styled the header and navbar'
+git push
+```

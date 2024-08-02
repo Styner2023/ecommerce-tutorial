@@ -82,10 +82,8 @@ $ git branch -M main
 $ git push origin main -u
 ```
 
-Hint! when you creat the repository on GitHub, before you add any files, GitHub will show you all of the instructions above and show the line below with the correct URL! 
+Hint! when you create the repository on GitHub, before you add any files, GitHub will show you all of the instructions above and show the line below with the correct URL! 
 
 ```
 git remote add origin GITHUB-REPO-URL
 ```
-
-
