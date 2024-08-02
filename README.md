@@ -14,10 +14,10 @@ A tutorial that teaches the fundamentals of **HTML**, **CSS** and **JS**
 - [Styling Moods](P06-Styling-Moods-Display)
 - [Shopping Cart](P07-Shopping-Cart-Tutorial)
 - [Displaying the Cart in the Console](P08-Displaying-Cart-In-Console)
-- [Remove Item from Cart](P09-Remove-Item-From-Cart)
-- [Connect Shopping Cart with ecommerce](P10-Connect-Shopping-Cart-With-Ecommerce)
+- [Remove Item from Cart](P09-Incrementing-and-Decrementing-cart-items)
+- [Connect Shopping Cart with ecommerce](P10-Updating-qty-with-input)
 - [Connect add to cart button](P11-Connect-AddToCart-Button-With-Cart)
-- [Shopping Cart features](P12-Shopping-Cart-Features)
+- [Shopping Cart features](P12-Shopping-Cart-style)
 
 ## Authors
 
